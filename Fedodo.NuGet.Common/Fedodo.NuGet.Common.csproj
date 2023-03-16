@@ -4,6 +4,14 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>Fedodo.NuGet.Common</Title>
+        <Authors>The Fedodo Authors</Authors>
+        <Description>A Fedodo NuGet containing commonly shared elements.</Description>
+        <PackageProjectUrl>https://fedodo.org</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Fedodo/Fedodo.NuGet.Common</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageTags>Fedodo</PackageTags>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     </PropertyGroup>
 
 </Project>
