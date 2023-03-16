@@ -16,4 +16,8 @@
         <PackageLicenseUrl>https://github.com/Fedodo/Fedodo.NuGet.Common/blob/main/LICENSE</PackageLicenseUrl>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+    </ItemGroup>
+
 </Project>
