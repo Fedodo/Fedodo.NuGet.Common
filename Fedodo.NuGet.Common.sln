@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedodo.NuGet.Common", "Fedodo.NuGet.Common\Fedodo.NuGet.Common.csproj", "{8E830CC0-FDB5-4F5F-A672-B0982B248E50}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{99BB7BA3-4F22-44D2-94C6-5FD5FA63932F}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\BuildAndDeploy.yaml = .github\workflows\BuildAndDeploy.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

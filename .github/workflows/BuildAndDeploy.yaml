@@ -1,0 +1,39 @@
+name: "Build and deploy to nuget.org"
+
+on:
+  push:
+    branches: [master]
+
+env:
+  PROJECT_PATH: "Fedodo.NuGet.Common/Fedodo.NuGet.Common.csproj"
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
+  NUGET_SOURCE_URL: "https://api.nuget.org/v3/index.json"
+  VERSION: 0.0.${{ github.run_number }}
+
+jobs:
+  deploy:
+    name: "Deploy"
+    runs-on: windows-latest
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v2
+
+      - name: "Install .net"
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.x"
+
+      - name: "Restore packages"
+        run: dotnet restore ${{ env.PROJECT_PATH }}
+
+      - name: "Build project"
+        run: dotnet build ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+
+#      - name: "Test"
+#        run: dotnet test ${{ env.PROJECT_PATH }} --no-restore --configuration Release
+
+      - name: "Pack Project"
+        run: dotnet pack ${{ env.PROJECT_PATH }} --no-restore --no-build --configuration Release --include-symbols -p:PackageVersion=${{ env.VERSION }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY }}
+
+      - name: "Push Package"
+        run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY }}\*.nupkg -k ${{ secrets.NUGET_KEY }} -s ${{ env.NUGET_SOURCE_URL }} --skip-duplicate
