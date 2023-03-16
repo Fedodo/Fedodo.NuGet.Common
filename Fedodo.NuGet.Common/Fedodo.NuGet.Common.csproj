@@ -5,13 +5,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <Title>Fedodo.NuGet.Common</Title>
-        <Authors>The Fedodo Authors</Authors>
+        <Authors>Fedodo</Authors>
         <Description>A Fedodo NuGet containing commonly shared elements.</Description>
         <PackageProjectUrl>https://fedodo.org</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Fedodo/Fedodo.NuGet.Common</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Fedodo</PackageTags>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <LangVersion>default</LangVersion>
+        <PackageLicenseUrl>https://github.com/Fedodo/Fedodo.NuGet.Common/blob/main/LICENSE</PackageLicenseUrl>
     </PropertyGroup>
 
 </Project>
