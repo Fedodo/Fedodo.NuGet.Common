@@ -2,7 +2,7 @@ name: "Build and deploy to nuget.org"
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 env:
   PROJECT_PATH: "Fedodo.NuGet.Common/Fedodo.NuGet.Common.csproj"
