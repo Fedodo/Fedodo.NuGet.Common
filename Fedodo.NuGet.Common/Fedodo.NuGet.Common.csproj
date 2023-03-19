@@ -14,10 +14,19 @@
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <LangVersion>default</LangVersion>
         <PackageLicenseUrl>https://github.com/Fedodo/Fedodo.NuGet.Common/blob/main/LICENSE</PackageLicenseUrl>
+        <PackageIcon>Fedodo Circle Dark.png</PackageIcon>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\Assets\Fedodo Circle Dark.png">
+        <Pack>True</Pack>
+        <PackagePath></PackagePath>
+        <Link>Fedodo Circle Dark.png</Link>
+      </None>
     </ItemGroup>
 
 </Project>

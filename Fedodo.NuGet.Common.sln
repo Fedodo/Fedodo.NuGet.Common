@@ -5,6 +5,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub", "GitHub", "{99BB7BA3-4F22-44D2-94C6-5FD5FA63932F}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\BuildAndDeploy.yaml = .github\workflows\BuildAndDeploy.yaml
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{D984673B-1CA9-4851-BD79-1FE3867C4340}"
+	ProjectSection(SolutionItems) = preProject
+		Assets\Fedodo Circle Dark.png = Assets\Fedodo Circle Dark.png
 	EndProjectSection
 EndProject
 Global
