@@ -40,7 +40,10 @@ public class UserHandler : IUserHandler
     public bool VerifyUser(Guid userId, HttpContext context)
     {
         var activeUserClaims = context.User.Claims.ToList();
-        var tokenUserId = activeUserClaims.Where(i => i.ValueType.IsNotNull() && i.Type == "sub")?.FirstOrDefault();
+        var tokenUserId = activeUserClaims.Where(i =>
+                i.ValueType.IsNotNull() &&
+                i.Type is "sub" or "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
+            ?.FirstOrDefault();
 
         if (tokenUserId.IsNull())
         {
