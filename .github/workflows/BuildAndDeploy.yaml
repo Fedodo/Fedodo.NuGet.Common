@@ -16,3 +16,4 @@ jobs:
           NUGET_SOURCE_URL: "https://api.nuget.org/v3/index.json"
           VERSION: 1.0.${{ github.run_number }}
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
+          PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output
