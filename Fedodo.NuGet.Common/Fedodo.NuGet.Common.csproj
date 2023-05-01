@@ -18,9 +18,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="LNA-DEV.CommonExtensions" Version="1.2.11" />
+      <PackageReference Include="LNA-DEV.CommonExtensions" Version="1.2.13" />
       <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-      <PackageReference Include="MongoDB.Driver" Version="2.19.0" />
+      <PackageReference Include="MongoDB.Driver" Version="2.19.1" />
     </ItemGroup>
 
     <ItemGroup>
