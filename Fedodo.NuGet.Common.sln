@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Assets", "Assets", "{D98467
 		Assets\Fedodo Circle Dark.png = Assets\Fedodo Circle Dark.png
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fedodo.NuGet.Common.Test", "Fedodo.NuGet.Common.Test\Fedodo.NuGet.Common.Test.csproj", "{24F9FE6E-FFE9-4D23-8A85-C06314854689}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,5 +25,9 @@ Global
 		{8E830CC0-FDB5-4F5F-A672-B0982B248E50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E830CC0-FDB5-4F5F-A672-B0982B248E50}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E830CC0-FDB5-4F5F-A672-B0982B248E50}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24F9FE6E-FFE9-4D23-8A85-C06314854689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24F9FE6E-FFE9-4D23-8A85-C06314854689}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24F9FE6E-FFE9-4D23-8A85-C06314854689}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24F9FE6E-FFE9-4D23-8A85-C06314854689}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
