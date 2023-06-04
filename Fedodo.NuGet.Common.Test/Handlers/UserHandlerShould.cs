@@ -28,7 +28,7 @@ public class UserHandlerShould
         var httpContextMock = new Mock<HttpContext>();
         httpContextMock.Setup(i => i.User.Claims).Returns(new List<Claim>()
         {
-            new Claim("sub", "AF0A675A-295D-447D-87D6-EF43BAB3E6F1"),
+            new Claim("actorIds", "AF0A675A-295D-447D-87D6-EF43BAB3E6F1"),
         });
 
         // Act
