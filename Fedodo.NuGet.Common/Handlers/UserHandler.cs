@@ -41,9 +41,7 @@ public class UserHandler : IUserHandler
     {
         var activeUserClaims = context.User.Claims.ToList();
         var tokenUserId = activeUserClaims.Where(i =>
-                i.ValueType.IsNotNull() &&
-                i.Type is "sub" or "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
-            ?.FirstOrDefault();
+                i.ValueType.IsNotNull() && i.Type is "actorIds")?.FirstOrDefault();
 
         if (tokenUserId.IsNull())
         {
@@ -51,8 +49,13 @@ public class UserHandler : IUserHandler
             return false;
         }
 
-        if (tokenUserId.Value.ToLower() == userId.ToString()) return true;
+        var actorIds = tokenUserId.Value.Split(";");
 
+        if (actorIds.Any(item => item.ToLower() == userId.ToString()))
+        {
+            return true;
+        }
+        
         _logger.LogWarning($"Someone tried to post as {userId} but was authorized as {tokenUserId}");
         return false;
     }
