@@ -32,7 +32,7 @@ public class UserHandlerShould
         });
 
         // Act
-        var result = _userHandler.VerifyUser(Guid.Parse("AF0A675A-295D-447D-87D6-EF43BAB3E6F1"), httpContextMock.Object);
+        var result = _userHandler.VerifyActorId(Guid.Parse("AF0A675A-295D-447D-87D6-EF43BAB3E6F1"), httpContextMock.Object);
 
         // Assert
         result.ShouldBeTrue();

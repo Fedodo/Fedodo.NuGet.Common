@@ -37,11 +37,13 @@ public class UserHandler : IUserHandler
         return user;
     }
 
-    public bool VerifyUser(Guid userId, HttpContext context)
+    public bool VerifyUserId(Guid userId, HttpContext context)
     {
         var activeUserClaims = context.User.Claims.ToList();
         var tokenUserId = activeUserClaims.Where(i =>
-                i.ValueType.IsNotNull() && i.Type is "actorIds")?.FirstOrDefault();
+                i.ValueType.IsNotNull() &&
+                i.Type is "sub" or "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")
+            ?.FirstOrDefault();
 
         if (tokenUserId.IsNull())
         {
@@ -49,14 +51,32 @@ public class UserHandler : IUserHandler
             return false;
         }
 
+        if (tokenUserId.Value.ToLower() == userId.ToString()) return true;
+
+        _logger.LogWarning($"Someone tried to be {userId} but was authorized as {tokenUserId}");
+        return false;
+    }    
+    
+    public bool VerifyActorId(Guid actorId, HttpContext context)
+    {
+        var activeUserClaims = context.User.Claims.ToList();
+        var tokenUserId = activeUserClaims.Where(i =>
+            i.ValueType.IsNotNull() && i.Type is "actorIds")?.FirstOrDefault();
+
+        if (tokenUserId.IsNull())
+        {
+            _logger.LogWarning($"No {nameof(tokenUserId)} found for {nameof(actorId)}:\"{actorId}\"");
+            return false;
+        }
+
         var actorIds = tokenUserId.Value.Split(";");
 
-        if (actorIds.Any(item => item.ToLower() == userId.ToString()))
+        if (actorIds.Any(item => item.ToLower() == actorId.ToString()))
         {
             return true;
         }
         
-        _logger.LogWarning($"Someone tried to post as {userId} but was authorized as {tokenUserId}");
+        _logger.LogWarning($"Someone tried to post as {actorId} but was authorized as {tokenUserId}");
         return false;
     }
 }
