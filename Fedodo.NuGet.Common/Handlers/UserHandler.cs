@@ -26,6 +26,14 @@ public class UserHandler : IUserHandler
         var user = await _repository.GetSpecificItem(filterUser, DatabaseLocations.Users.Database,
             DatabaseLocations.Users.Collection);
         return user;
+    }    
+    
+    public async Task UpdateUserAsync(User user)
+    {
+        var filterUserDefinitionBuilder = Builders<User>.Filter;
+        var filterUser = filterUserDefinitionBuilder.Eq(i => i.Id, user.Id);
+        await _repository.Update(user, filterUser, DatabaseLocations.Users.Database,
+            DatabaseLocations.Users.Collection);
     }
 
     public async Task<User> GetUserByNameAsync(string userName)

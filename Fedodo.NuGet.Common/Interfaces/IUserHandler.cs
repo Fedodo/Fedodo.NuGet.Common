@@ -9,4 +9,5 @@ public interface IUserHandler
     public Task<User> GetUserByNameAsync(string userName);
     public bool VerifyUserId(Guid userId, HttpContext context);
     public bool VerifyActorId(Guid actorId, HttpContext context);
+    public Task UpdateUserAsync(User user);
 }
