@@ -8,5 +8,4 @@ public class User
     public byte[]? PasswordHash { get; set; }
     public byte[]? PasswordSalt { get; set; }
     public string? Role { get; set; }
-    public string? PrivateKeyActivityPub { get; set; }
 }

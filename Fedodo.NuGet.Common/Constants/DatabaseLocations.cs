@@ -15,6 +15,12 @@ public static class DatabaseLocations
         Database = "Account",
         Collection = "Actors"
     };
+    
+    public static DatabaseCollectionPair ActorSecrets { get; } = new()
+    {
+        Database = "Account",
+        Collection = "ActorSecrets"
+    };
 
     public static DatabaseCollectionPair Webfinger { get; } = new()
     {
