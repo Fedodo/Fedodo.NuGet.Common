@@ -19,17 +19,21 @@ public interface IMongoDbRepository
         SortDefinition<T> sortDefinition);
 
     public Task<IEnumerable<T>> GetSpecificPaged<T>(string databaseName, string collectionName, int pageId,
-        int pageSize,
-        SortDefinition<T> sortDefinition, FilterDefinition<T> filter);
+        int pageSize, SortDefinition<T> sortDefinition, FilterDefinition<T> filter);
 
     public Task<long> CountSpecific<T>(string databaseName, string collectionName, FilterDefinition<T> filter);
 
-    public Task<IEnumerable<T>> GetAllPagedFromCollections<T>(string databaseName, string collectionName,
-        int pageId, int pageSize, SortDefinition<T> sortDefinition, string foreignCollectionName);
+    public Task<IEnumerable<T>> GetAllPagedFromCollections<T>(string databaseName, string collectionName, int pageId,
+        int pageSize, SortDefinition<T> sortDefinition, string foreignCollectionName);
 
     public Task<IEnumerable<T>> GetSpecificPagedFromCollections<T>(string databaseName, string collectionName,
-        int pageId, int pageSize, SortDefinition<T> sortDefinition, string foreignCollectionName, FilterDefinition<T> filter);
+        int pageId, int pageSize, SortDefinition<T> sortDefinition, string foreignCollectionName,
+        FilterDefinition<T> filter);
 
     public Task<long> CountSpecificFromCollections<T>(string databaseName, List<string> collectionNames,
+        FilterDefinition<T> filter);
+
+    public Task<IEnumerable<T>> GetSpecificPagedFromCollections<T>(string databaseName,
+        List<string> collectionNames, int pageId, int pageSize, SortDefinition<T> sortDefinition,
         FilterDefinition<T> filter);
 }

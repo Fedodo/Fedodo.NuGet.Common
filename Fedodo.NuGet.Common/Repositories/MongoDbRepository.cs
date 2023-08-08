@@ -139,6 +139,26 @@ public class MongoDbRepository : IMongoDbRepository
         return result;
     }
 
+    public async Task<IEnumerable<T>> GetSpecificPagedFromCollections<T>(string databaseName,
+        List<string> collectionNames, int pageId, int pageSize, SortDefinition<T> sortDefinition,
+        FilterDefinition<T> filter)
+    {
+        _logger.LogTrace($"Getting all items paged of type: {typeof(T)} from Collections");
+
+        var database = _client.GetDatabase(databaseName);
+        var collection = AggregateCollections<T>(collectionNames, database);
+
+        var result = await collection.Match(filter)
+            .Sort(sortDefinition)
+            .Skip(pageId * pageSize)
+            .Limit(pageSize)
+            .ToListAsync();
+
+        _logger.LogTrace($"Finished getting all items paged of type: {typeof(T)} from Collections");
+
+        return result;
+    }
+
     public async Task<long> CountAll<T>(string databaseName, string collectionName)
     {
         _logger.LogTrace($"Counting all items of type: {typeof(T)}");
@@ -173,26 +193,12 @@ public class MongoDbRepository : IMongoDbRepository
         _logger.LogTrace($"Counting all items of type: {typeof(T)} in {nameof(CountSpecificFromCollections)}");
 
         var database = _client.GetDatabase(databaseName);
+        var collection = AggregateCollections<T>(collectionNames, database);
 
-        var collection = database.GetCollection<T>(collectionNames[0]).Aggregate();
-        
-        var firstExecution = true;
-        foreach (var item in collectionNames)
-        {
-            if (firstExecution)
-            {
-                firstExecution = false; 
-                continue;
-            }
-
-            var foreignCollection = database.GetCollection<T>(item);
-            
-            collection = collection.UnionWith(foreignCollection);
-        }
-        
         var result = (await collection.Match(filter).Count().FirstOrDefaultAsync()).Count;
-        
-        _logger.LogTrace($"Finished counting all items of type: {typeof(T)}  in {nameof(CountSpecificFromCollections)}");
+
+        _logger.LogTrace(
+            $"Finished counting all items of type: {typeof(T)}  in {nameof(CountSpecificFromCollections)}");
 
         return result;
     }
@@ -234,5 +240,27 @@ public class MongoDbRepository : IMongoDbRepository
         await collection.ReplaceOneAsync(filter, item);
 
         _logger.LogInformation($"Finished updating item of type: {typeof(T)}");
+    }
+
+
+    private static IAggregateFluent<T> AggregateCollections<T>(List<string> collectionNames, IMongoDatabase database)
+    {
+        var collection = database.GetCollection<T>(collectionNames[0]).Aggregate();
+
+        var firstExecution = true;
+        foreach (var item in collectionNames)
+        {
+            if (firstExecution)
+            {
+                firstExecution = false;
+                continue;
+            }
+
+            var foreignCollection = database.GetCollection<T>(item);
+
+            collection = collection.UnionWith(foreignCollection);
+        }
+
+        return collection;
     }
 }
