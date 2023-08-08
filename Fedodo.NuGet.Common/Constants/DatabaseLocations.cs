@@ -32,15 +32,10 @@ public static class DatabaseLocations
     {
         Database = "Account",
         Collection = "Users"
-    };
-
-    public static DatabaseCollectionPair Outbox { get; } = new()
-    {
-        Database = "Outbox"
     };    
     
-    public static DatabaseCollectionPair Inbox { get; } = new()
+    public static DatabaseCollectionPair Activity { get; } = new()
     {
-        Database = "Inbox"
+        Database = "Activity"
     };
 }
