@@ -95,9 +95,10 @@ public class MongoDbRepository : IMongoDbRepository
 
         return result;
     }
-    
+
     public async Task<IEnumerable<T>> GetSpecificPagedFromCollections<T>(string databaseName, string collectionName,
-        int pageId, int pageSize, SortDefinition<T> sortDefinition, string foreignCollectionName, FilterDefinition<T> filter)
+        int pageId, int pageSize, SortDefinition<T> sortDefinition, string foreignCollectionName,
+        FilterDefinition<T> filter)
     {
         _logger.LogTrace($"Getting specific items paged of type: {typeof(T)}");
 
@@ -162,6 +163,36 @@ public class MongoDbRepository : IMongoDbRepository
         var result = await collection.CountDocumentsAsync(filter);
 
         _logger.LogTrace($"Finished counting all items of type: {typeof(T)}");
+
+        return result;
+    }
+
+    public async Task<long> CountSpecificFromCollections<T>(string databaseName, List<string> collectionNames,
+        FilterDefinition<T> filter)
+    {
+        _logger.LogTrace($"Counting all items of type: {typeof(T)} in {nameof(CountSpecificFromCollections)}");
+
+        var database = _client.GetDatabase(databaseName);
+
+        var collection = database.GetCollection<T>(collectionNames[0]).Aggregate();
+        
+        var firstExecution = true;
+        foreach (var item in collectionNames)
+        {
+            if (firstExecution)
+            {
+                firstExecution = false; 
+                continue;
+            }
+
+            var foreignCollection = database.GetCollection<T>(item);
+            
+            collection = collection.UnionWith(foreignCollection);
+        }
+        
+        var result = (await collection.Match(filter).Count().FirstOrDefaultAsync()).Count;
+        
+        _logger.LogTrace($"Finished counting all items of type: {typeof(T)}  in {nameof(CountSpecificFromCollections)}");
 
         return result;
     }
