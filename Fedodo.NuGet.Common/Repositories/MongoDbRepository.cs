@@ -117,13 +117,13 @@ public class MongoDbRepository : IMongoDbRepository
     }
 
     public async Task<IEnumerable<T>> GetSpecificPagedFromCollections<T>(string databaseName,
-        List<string> collectionNames, int pageId, int pageSize, SortDefinition<T> sortDefinition,
+        IEnumerable<string> collectionNames, int pageId, int pageSize, SortDefinition<T> sortDefinition,
         FilterDefinition<T> filter)
     {
         _logger.LogTrace($"Getting all items paged of type: {typeof(T)} from Collections");
 
         var database = _client.GetDatabase(databaseName);
-        var collection = AggregateCollections<T>(collectionNames, database);
+        var collection = AggregateCollections<T>(collectionNames.ToList(), database);
 
         var result = await collection.Match(filter)
             .Sort(sortDefinition)
