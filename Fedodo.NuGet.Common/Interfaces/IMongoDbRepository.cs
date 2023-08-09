@@ -30,6 +30,6 @@ public interface IMongoDbRepository
         FilterDefinition<T> filter);
 
     public Task<IEnumerable<T>> GetSpecificPagedFromCollections<T>(string databaseName,
-        List<string> collectionNames, int pageId, int pageSize, SortDefinition<T> sortDefinition,
+        IEnumerable<string> collectionNames, int pageId, int pageSize, SortDefinition<T> sortDefinition,
         FilterDefinition<T> filter);
 }
