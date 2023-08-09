@@ -95,30 +95,7 @@ public class MongoDbRepository : IMongoDbRepository
 
         return result;
     }
-
-    public async Task<IEnumerable<T>> GetSpecificPagedFromCollections<T>(string databaseName, string collectionName,
-        int pageId, int pageSize, SortDefinition<T> sortDefinition, string foreignCollectionName,
-        FilterDefinition<T> filter)
-    {
-        _logger.LogTrace($"Getting specific items paged of type: {typeof(T)}");
-
-        var database = _client.GetDatabase(databaseName);
-        var collection = database.GetCollection<T>(collectionName);
-        var foreignCollection = database.GetCollection<T>(foreignCollectionName);
-
-        var result = await collection.Aggregate()
-            .UnionWith(foreignCollection)
-            .Match(filter)
-            .Sort(sortDefinition)
-            .Skip(pageId * pageSize)
-            .Limit(pageSize)
-            .ToListAsync();
-
-        _logger.LogTrace($"Finished getting specific items paged of type: {typeof(T)}");
-
-        return result;
-    }
-
+    
     public async Task<IEnumerable<T>> GetSpecificPaged<T>(string databaseName, string collectionName, int pageId,
         int pageSize,
         SortDefinition<T> sortDefinition, FilterDefinition<T> filter)
@@ -187,13 +164,13 @@ public class MongoDbRepository : IMongoDbRepository
         return result;
     }
 
-    public async Task<long> CountSpecificFromCollections<T>(string databaseName, List<string> collectionNames,
+    public async Task<long> CountSpecificFromCollections<T>(string databaseName, IEnumerable<string> collectionNames,
         FilterDefinition<T> filter)
     {
         _logger.LogTrace($"Counting all items of type: {typeof(T)} in {nameof(CountSpecificFromCollections)}");
 
         var database = _client.GetDatabase(databaseName);
-        var collection = AggregateCollections<T>(collectionNames, database);
+        var collection = AggregateCollections<T>(collectionNames.ToList(), database);
 
         var result = (await collection.Match(filter).Count().FirstOrDefaultAsync()).Count;
 
