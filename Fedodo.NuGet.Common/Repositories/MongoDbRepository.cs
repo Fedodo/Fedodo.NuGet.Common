@@ -164,6 +164,14 @@ public class MongoDbRepository : IMongoDbRepository
         return result;
     }
 
+    public IEnumerable<string> GetCollectionNames(string databaseName)
+    {
+        var database = _client.GetDatabase(databaseName);
+        var collectionNames = database.ListCollectionNames().ToEnumerable();
+
+        return collectionNames;
+    }
+
     public async Task<long> CountSpecificFromCollections<T>(string databaseName, IEnumerable<string> collectionNames,
         FilterDefinition<T> filter)
     {
