@@ -95,7 +95,7 @@ public class MongoDbRepository : IMongoDbRepository
 
         return result;
     }
-    
+
     public async Task<IEnumerable<T>> GetSpecificPaged<T>(string databaseName, string collectionName, int pageId,
         int pageSize,
         SortDefinition<T> sortDefinition, FilterDefinition<T> filter)
@@ -197,6 +197,17 @@ public class MongoDbRepository : IMongoDbRepository
         var result = (await collection.FindAsync(filter)).SingleOrDefault();
 
         _logger.LogTrace($"Returning specific item with type: {typeof(T)}");
+
+        return result;
+    }
+
+    public async Task<T> GetSpecificItemFromCollections<T>(FilterDefinition<T> filter, string databaseName,
+        IEnumerable<string> collectionNames)
+    {
+        var database = _client.GetDatabase(databaseName);
+        var collection = AggregateCollections<T>(collectionNames.ToList(), database);
+
+        var result = await collection.Match(filter).SingleOrDefaultAsync();
 
         return result;
     }

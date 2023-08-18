@@ -34,4 +34,7 @@ public interface IMongoDbRepository
         FilterDefinition<T> filter);
 
     public IEnumerable<string> GetCollectionNames(string databaseName);
+
+    public Task<T> GetSpecificItemFromCollections<T>(FilterDefinition<T> filter, string databaseName,
+        IEnumerable<string> collectionNames);
 }
